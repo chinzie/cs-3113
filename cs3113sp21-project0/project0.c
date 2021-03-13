@@ -16,43 +16,37 @@ typedef struct BYTE BYTE;
 int main()
 {
        	int n;
-  
-	/*
-	int h = 5;
-	BYTE b[h];
-
-	for (int i = 0; i < h; i++)
-	{
-		b[i].c[i] = 'g';
-		b[i].count = 1;
-	}
-	for (int i = 0; i < h; i++)
-	{
-		printf("value at %d, is %c, for count %d\n", i, b[i].c[i], b[i].count);
-	}
-	*/
-
-
-
 	
-
 	unsigned char *buf = (char *) malloc ( sizeof(char));
 	
-
 	int i = 0;
 	int g = 0;
 	int c;
 
-
         while((n = read(0, buf, 1)) > 0)
 	{
-		buf[i] = *buf;
-		printf("%c\n", buf[i]);
-		//printf("%c\n", *buf);
-		i++;
-
-
 		
+		if (*buf <= 0x7F)
+		{
+			printf("ascii\n");
+			buf[i] = *buf;
+			i++;
+		}
+		else if (*buf <= 0x07FF)
+		{
+			printf("two byte\n");
+			buf[i] = (((*buf >> 6) & 0x1F) | 0xC0);
+			buf[i+1] = (((*buf >> 0) & 0x3F) | 0x80);
+			i++;
+			i++;
+		}
+		
+
+		//buf[i] = *buf;
+		//printf("%c\n", buf[i]);
+		//printf("%c\n", *buf);
+		//i++;
+
 		/*
 		for (int j = 0; j < temp; j++ && i > 0 )
                 {
@@ -108,20 +102,72 @@ int main()
 
 	BYTE b[i];
 
+	int j = buf[1];
+	int yeet1 = 0;
+	for (int f = 0; f < i; f++)
+	{
+		if (j == buf[f])
+		{
+			yeet1++;
+		}
+	}
 	
+
+
+	int yeet = 0;
+	int k = 0;
 	printf("%d\n", i);
 	for (int q = 0; q < i; q++)
 	{
-		b[q].c[q] = buf[q];
-		for (int a = 0; a < i; a++)
-		{
-			if (b[q].c[q] == buf[a])
-			{
-				printf("repeat\n");
-			}
-		}
+		int c = buf[q];
+		printf("starting\n");
 
+
+		if (k < 1)
+		{
+			printf("first\n");
+			b[k].c[k] = c;
+			for (int p = 0; p < i; p++)
+			{
+				if (c == buf[p])
+				{
+					yeet++;
+				}
+			}
+			b[k].count = yeet;
+			k++;
+			yeet = 0;
+		}
+		else
+		{
+			for (int d = 0; d < k; d++)
+			{
+			       	if (c == b[d].c[d])
+				{
+					printf("%c already exists\n", c);
+					break;
+				}
+				else if (c != b[d].c[d] && d == k - 1)
+				{
+					printf("%c, does not exist\n", c);
+					for (int p = 0; p < i; p++)
+					{
+						if (c == buf[p])
+						{
+                                                	yeet++;
+						}
+					}
+					b[k].c[k] = c;
+					b[k].count = yeet;
+					yeet = 0;
+                                	k++;
+					break;
+                        	}
+                	}
+
+		}
 	}
+	printf("%d\n", k);
 	
 
 	//for (int q = 0; q < i; q++)
@@ -132,9 +178,9 @@ int main()
 	
 	int count = 1;
 	printf("now printing the array: \n");
-	for (int a = 0; a < i; a++)
+	for (int a = 0; a < k; a++)
 	{
-		printf("%c-->%d\n", buf[a], count);
+		printf("%c-->%d\n", b[a].c[a], b[a].count);
 	}
 
        	return 0;
