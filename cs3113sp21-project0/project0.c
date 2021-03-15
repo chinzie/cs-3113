@@ -7,7 +7,7 @@
 
 struct BYTE
 {
-	unsigned char c[100000];
+	unsigned int c[100000];
 	int count;
 };
 typedef struct BYTE BYTE;
@@ -25,6 +25,9 @@ int main()
 
         while((n = read(0, buf, 1)) > 0)
 	{
+		buf[i] = *buf;
+		i++;
+		/*
 		
 		if (*buf <= 0x7F)
 		{
@@ -41,6 +44,7 @@ int main()
 			
 			i++;
 		}
+		*/
 
 		//buf[i] = *buf;
 		//printf("%c\n", buf[i]);
@@ -101,50 +105,32 @@ int main()
 	}
 
 	BYTE b[i];
-
-	int j = buf[1];
-	int yeet1 = 0;
-	for (int f = 0; f < i; f++)
-	{
-		if (j == buf[f])
-		{
-			yeet1++;
-		}
-	}
 	
 	//to print multibyte, seek flag, combine, then print
 	
-	const unsigned char zeropos = 0b00000001;
         const unsigned char sevenpos = 0b10000000;
         const unsigned char sixpos = 0b01000000;
         const unsigned char fivepos = 0b00100000;
         const unsigned char fourpos = 0b00010000;
 
-	int yen = 0xC2A5;
-	printf("%c\n", yen);
 
 
 
-
-
-
+	unsigned int o;
 
 	
 	for (int u = 0; u < i; u++)
 	{
-		char j = buf[u];
+		unsigned char j = buf[u];
 		if (j & sevenpos && j & sixpos)
 		{
-			char h = buf[u+1];
-			char w = ( j << 8 ) | h;
-
-			buf[u] = w;
+			unsigned char p = buf[u+1];
+			o = 256 * j + p;
 			u++;
-			
 			printf("two byte char\n");
 		}
 	}
-	
+	printf("%c\n", o);
 	
 
 	for (int u = 0; u < i; u++)
@@ -157,26 +143,27 @@ int main()
 	
 	int yeet = 0;
 	int k = 0;
-
-	unsigned char yes = 0b11010000;
-
-	if (yes & sevenpos)
-	{
-		printf("eight bit is on\n");
-	}
-	if (yes & sixpos)
-        {
-                printf("seven bit is on\n");
-        }
- 	if (yes & fivepos)
-        {
-                printf("six bit is on\n");
-        }
+	unsigned int y;
 
 	for (int q = 0; q < i; q++)
 	{
 		unsigned char c = buf[q];
 		//printf("starting\n");
+		//
+
+		if (c & sevenpos && c & sixpos)
+		{
+			unsigned char p = buf[q+1];
+			y = 256 * c + p;
+			b[k].c[k] = y;
+			yeet++;
+			b[k].count = yeet;
+			//make edits for each case two, three, four
+			//including count
+			//and for first case .
+
+			q++;
+		}
 		
 		
 		if (k < 1)
