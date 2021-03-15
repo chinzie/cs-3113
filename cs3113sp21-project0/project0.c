@@ -120,22 +120,40 @@ int main()
         const unsigned char fivepos = 0b00100000;
         const unsigned char fourpos = 0b00010000;
 
+	int yen = 0xC2A5;
+	printf("%c\n", yen);
+
+
+
+
+
+
+
+	
 	for (int u = 0; u < i; u++)
 	{
-		unsigned char j = buf[u];
+		char j = buf[u];
 		if (j & sevenpos && j & sixpos)
 		{
-
-			unsigned char h = buf[u+1];
-			unsigned char w = ( j << 8 ) | h;
+			char h = buf[u+1];
+			char w = ( j << 8 ) | h;
 
 			buf[u] = w;
 			u++;
 			
-
 			printf("two byte char\n");
 		}
 	}
+	
+	
+
+	for (int u = 0; u < i; u++)
+	{
+		printf("%c\n", buf[u]);
+	}
+	
+	
+
 	
 	int yeet = 0;
 	int k = 0;
