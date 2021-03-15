@@ -7,7 +7,7 @@
 
 struct BYTE
 {
-	char c[100];
+	unsigned char c[100000];
 	int count;
 };
 typedef struct BYTE BYTE;
@@ -21,26 +21,26 @@ int main()
 	
 	int i = 0;
 	int g = 0;
-	int c;
+	//int c;
 
         while((n = read(0, buf, 1)) > 0)
 	{
 		
 		if (*buf <= 0x7F)
 		{
-			printf("ascii\n");
+			//printf("ascii\n");
 			buf[i] = *buf;
 			i++;
 		}
 		else if (*buf <= 0x07FF)
 		{
-			printf("two byte\n");
-			buf[i] = (((*buf >> 6) & 0x1F) | 0xC0);
-			buf[i+1] = (((*buf >> 0) & 0x3F) | 0x80);
-			i++;
+			//printf("two byte\n");
+			buf[i] = *buf;
+			//buf[i] = (((*buf >> 6) & 0x1F) | 0xC0);
+			//buf[i+1] = (((*buf >> 0) & 0x3F) | 0x80);
+			
 			i++;
 		}
-		
 
 		//buf[i] = *buf;
 		//printf("%c\n", buf[i]);
@@ -112,20 +112,58 @@ int main()
 		}
 	}
 	
+	//to print multibyte, seek flag, combine, then print
+	
+	const unsigned char zeropos = 0b00000001;
+        const unsigned char sevenpos = 0b10000000;
+        const unsigned char sixpos = 0b01000000;
+        const unsigned char fivepos = 0b00100000;
+        const unsigned char fourpos = 0b00010000;
 
+	for (int u = 0; u < i; u++)
+	{
+		unsigned char j = buf[u];
+		if (j & sevenpos && j & sixpos)
+		{
 
+			unsigned char h = buf[u+1];
+			unsigned char w = ( j << 8 ) | h;
+
+			buf[u] = w;
+			u++;
+			
+
+			printf("two byte char\n");
+		}
+	}
+	
 	int yeet = 0;
 	int k = 0;
-	printf("%d\n", i);
+
+	unsigned char yes = 0b11010000;
+
+	if (yes & sevenpos)
+	{
+		printf("eight bit is on\n");
+	}
+	if (yes & sixpos)
+        {
+                printf("seven bit is on\n");
+        }
+ 	if (yes & fivepos)
+        {
+                printf("six bit is on\n");
+        }
+
 	for (int q = 0; q < i; q++)
 	{
-		int c = buf[q];
-		printf("starting\n");
-
-
+		unsigned char c = buf[q];
+		//printf("starting\n");
+		
+		
 		if (k < 1)
 		{
-			printf("first\n");
+			//printf("first\n");
 			b[k].c[k] = c;
 			for (int p = 0; p < i; p++)
 			{
@@ -144,12 +182,12 @@ int main()
 			{
 			       	if (c == b[d].c[d])
 				{
-					printf("%c already exists\n", c);
+					//printf("%c already exists\n", c);
 					break;
 				}
 				else if (c != b[d].c[d] && d == k - 1)
 				{
-					printf("%c, does not exist\n", c);
+					//printf("%c, does not exist\n", c);
 					for (int p = 0; p < i; p++)
 					{
 						if (c == buf[p])
@@ -167,16 +205,10 @@ int main()
 
 		}
 	}
-	printf("%d\n", k);
 	
 
-	//for (int q = 0; q < i; q++)
-	//{
-	//	printf("%c\n", b[q].c[q]);
-	//}
-
 	
-	int count = 1;
+	
 	printf("now printing the array: \n");
 	for (int a = 0; a < k; a++)
 	{
