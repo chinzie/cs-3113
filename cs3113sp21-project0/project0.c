@@ -18,21 +18,24 @@ int main()
 {
        	int n;
 	
-	unsigned char *buf = (char *) malloc (1000000 *  sizeof(char));
+	unsigned char *buf = (char *) malloc (5000000 *  sizeof(char));
 
 
 
 	int i = 0;
 	int g = 0;
-	
+	printf("hi\n");
 
         while((n = read(0, buf, 1)) > 0)
 	{
 		buf[i] = *buf;
 		i++;
 	}
+	printf("size of file %d\n", i);
 
-	BYTE b[i];
+	//BYTE b[i];
+	BYTE* b = malloc(i * sizeof(b));
+	printf("still good\n");
 	
 
 	
@@ -167,7 +170,7 @@ int main()
 		}
 	}
 
-	//qsort(b, k, sizeof(BYTE), comp);
+	qsort(b, k, sizeof(BYTE), comp);
 	
 	
 	for (int a = 0; a < k; a++)
