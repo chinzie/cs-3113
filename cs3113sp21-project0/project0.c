@@ -24,18 +24,18 @@ int main()
 
 	int i = 0;
 	int g = 0;
-	printf("hi\n");
+	
 
         while((n = read(0, buf, 1)) > 0)
 	{
 		buf[i] = *buf;
 		i++;
 	}
-	printf("size of file %d\n", i);
+	
 
 	//BYTE b[i];
 	BYTE* b = malloc(i * sizeof(b));
-	printf("still good\n");
+	
 	
 
 	
