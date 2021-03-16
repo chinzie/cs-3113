@@ -3,5 +3,3 @@ all:
 
 clean:
 	-rm project0
-
-
