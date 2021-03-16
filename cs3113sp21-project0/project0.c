@@ -22,14 +22,9 @@ int main()
 
 
 
-
-	//unsigned int *e = (int *)  malloc (1000);
-
-
-
 	int i = 0;
 	int g = 0;
-	//int c;
+	
 
         while((n = read(0, buf, 1)) > 0)
 	{
@@ -61,10 +56,10 @@ int main()
 	{
 		int temp = q;
 		unsigned char c = buf[q];
-		//printf("now checking %d\n", c);
-		if (c & sevenpos && c & sixpos && c & fivepos && c & fourpos)//4 byte char
+		
+		if (c & sevenpos && c & sixpos && c & fivepos && c & fourpos)
 		{
-			//proceed to allocate next three bytes to calculate dec value to store
+			//proceed to allocate next three bytes
 			unsigned char p = buf[q+1];
 			unsigned char u = buf[q+2];
 			unsigned char w = buf[q+3];
@@ -83,10 +78,10 @@ int main()
 			{
 				if (y == b[d].c)
 				{
-					q++;//because the two byte char already exists increment to skip its second byte
+					q++;
 					break;
 				}
-				else if (y != b[d].c && d == k - 1)//if at end of array
+				else if (y != b[d].c && d == k - 1)
 				{
 					
 					for (int t = 0; t < i; t++)
@@ -125,7 +120,7 @@ int main()
 			k++;
 			yeet = 0;
 		}
-		else if (temp == q)//if q hasnt changed meaning no values were added
+		else if (temp == q)//if q hasnt changed
 		{
 			for (int d = 0; d < k; d++)
 			{
@@ -180,7 +175,7 @@ int main()
 		printf("%c->%d\n", b[a].c, b[a].count);
 	}
 
-	//free(b);
+	
 
        	return 0;
 }
