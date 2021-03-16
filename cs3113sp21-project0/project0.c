@@ -172,7 +172,7 @@ int main()
 		}
 	}
 
-	qsort(b, k, sizeof(BYTE), comp);
+	//qsort(b, k, sizeof(BYTE), comp);
 	
 	
 	for (int a = 0; a < k; a++)
