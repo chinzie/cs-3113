@@ -7,7 +7,7 @@
 
 struct BYTE
 {
-	unsigned int c;
+	unsigned char c;
 	
 	int count;
 };
@@ -52,76 +52,67 @@ int main()
 
 	unsigned int o;
 
-	/*
-	for (int u = 0; u < i; u++)
-	{
-		unsigned char j = buf[u];
-		if (j & sevenpos && j & sixpos)
-		{
-			unsigned char p = buf[u+1];
-			o = 256 * j + p;
-			u++;
-			printf("two byte char\n");
-		}
-	}
-	printf("%c\n", o);
-	*/
-	
-
 	
 	int yeet = 0;
 	int k = 0;
-	unsigned int y;
+	unsigned char y;
 
 	for (int q = 0; q < i; q++)
 	{
+		int temp = q;
 		unsigned char c = buf[q];
-		//printf("starting\n");
-		//
-
-		if (c & sevenpos && c & sixpos)//if it is a two byte char
+		//printf("now checking %d\n", c);
+		if (c & sevenpos && c & sixpos && c & fivepos && c & fourpos)//4 byte char
 		{
-			printf("two byte char\n");
+			//proceed to allocate next three bytes to calculate dec value to store
+			unsigned char p = buf[q+1];
+			unsigned char u = buf[q+2];
+			unsigned char w = buf[q+3];
+
+		}
+		else if (c & sevenpos && c & sixpos && c & fivepos)
+		{
+
+			
+		}
+		else if (c & sevenpos && c & sixpos)//if it is a two byte char
+		{
 			unsigned char p = buf[q+1];
 			y = 256 * c + p;
 			for (int d = 0; d < k; d++)
 			{
 				if (y == b[d].c)
 				{
-					printf("two bite already exists\n");
+					q++;//because the two byte char already exists increment to skip its second byte
 					break;
 				}
-				else if (y != b[d].c && d == k - 1)
+				else if (y != b[d].c && d == k - 1)//if at end of array
 				{
-					printf("end of array\n");
+					
 					for (int t = 0; t < i; t++)
 					{
-						printf("yup\n");
 						if (c == buf[t] && p == buf[t+1])
 						{
-							printf("showsup\n");
+							
 							yeet++;
 						}
-						b[k].c = y;
-						yeet++;
-						b[k].count = yeet;
-						yeet = 0;
-						k++;
-						q++;
-						q++;
-						break;
 					}
+					
+					b[k].c = y;
+					b[k].count = yeet;
+					yeet = 0;
+					k++;
+					q++;
+					q++;
+					break;
+					
 				}
 			}
-			//make edits for each case two, three, four
-			//including count
-			//and for first case .
 		}
 		
 		
 		if (k < 1)
 		{
-			//printf("first\n");
 			b[k].c = c;
 			for (int p = 0; p < i; p++)
 			{
@@ -134,18 +125,18 @@ int main()
 			k++;
 			yeet = 0;
 		}
-		else
+		else if (temp == q)//if q hasnt changed meaning no values were added
 		{
 			for (int d = 0; d < k; d++)
 			{
 			       	if (c == b[d].c)
 				{
-					//printf("%c already exists\n", c);
+					
 					break;
 				}
 				else if (c != b[d].c && d == k - 1)
 				{
-					//printf("%c, does not exist\n", c);
+					
 					for (int p = 0; p < i; p++)
 					{
 						if (c == buf[p])
@@ -153,6 +144,7 @@ int main()
                                                 	yeet++;
 						}
 					}
+					
 					b[k].c = c;
 					b[k].count = yeet;//set count value
 					yeet = 0;//reset count value
@@ -163,14 +155,29 @@ int main()
 
 		}
 	}
-	
 
+	int comp (const void *left, const void *right)
+	{
+		if (((BYTE *)left)->count > ((BYTE *)right)->count)
+		{
+			return -1;
+		}
+		else if (((BYTE *)left)->count < ((BYTE *)right)->count)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	qsort(b, k, sizeof(BYTE), comp);
 	
 	
-	printf("now printing the array: \n");
 	for (int a = 0; a < k; a++)
 	{
-		printf("%d-->%d\n", b[a].c, b[a].count);
+		printf("%c->%d\n", b[a].c, b[a].count);
 	}
 
 	//free(b);
