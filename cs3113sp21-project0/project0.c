@@ -66,6 +66,7 @@ int main()
 			unsigned char p = buf[q+1];
 			unsigned char u = buf[q+2];
 			unsigned char w = buf[q+3];
+			
 
 		}
 		else if (c & sevenpos && c & sixpos && c & fivepos)
@@ -170,7 +171,7 @@ int main()
 		}
 	}
 
-	qsort(b, k, sizeof(BYTE), comp);
+	//qsort(b, k, sizeof(BYTE), comp);
 	
 	
 	for (int a = 0; a < k; a++)
